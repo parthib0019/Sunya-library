@@ -1,0 +1,24 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs and databases that will be mounted via volumes
+calibre-web.log
+*.log
+
+# Git & IDE
+.git/
+.gitignore
+.github/
+.gemini/
+.idea/
+.vscode/
+
+# Test artifacts
+test/

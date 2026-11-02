@@ -1,0 +1,16 @@
+
+
+services:
+  sunya-library:
+    build: .
+    container_name: sunya-library
+    restart: unless-stopped
+    ports:
+      - "8083:8083"
+    volumes:
+      # Keep user accounts, settings, and reading bookmarks safe on host
+      - ./app.db:/app/app.db
+      # Mount your Calibre library directory (where metadata.db and book folders are)
+      - ./library:/library
+    environment:
+      - CALIBRE_DB_PATH=/library
