@@ -32,9 +32,9 @@
       {% endif %}
     {% endif %}
   {% endif %}
-  <div class="row display-flex">
+  <div class="row display-flex libsunya-pinterest-grid">
     {% for entry in entries %}
-    <div class="col-sm-3 col-lg-2 col-xs-6 book session">
+    <div class="book session">
       <div class="cover">
             <a href="{{ url_for('web.show_book', book_id=entry.Books.id) }}" {% if simple==false %}data-toggle="modal" data-target="#bookDetailsModal" data-remote="false"{% endif %}>
               <span class="img" title="{{entry.Books.title}}" >

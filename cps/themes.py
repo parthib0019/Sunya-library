@@ -20,7 +20,7 @@ THEMES = (
     {
         "id": 0,
         "identifier": "standard",
-        "label": "Standard Theme",
+        "label": "LibSunya Theme",
         "configurable": True,
         "css_files": (),
         "js_files": (),

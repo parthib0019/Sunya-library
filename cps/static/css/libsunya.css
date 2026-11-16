@@ -1,0 +1,1501 @@
+/* ==========================================================================
+   LibSunya - Modern Black, White & Orange Pinterest Theme
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  --ls-bg-main: #0c0e12;
+  --ls-bg-surface: #13161c;
+  --ls-bg-card: #181b22;
+  --ls-bg-card-hover: #1f232c;
+  --ls-border-subtle: #252832;
+  --ls-border-card: #282c37;
+  --ls-border-highlight: #ff6b00;
+  
+  --ls-text-bright: #ffffff;
+  --ls-text-primary: #f3f4f6;
+  --ls-text-secondary: #9ca3af;
+  --ls-text-muted: #6b7280;
+  
+  --ls-orange: #ff6b00;
+  --ls-orange-light: #ff8533;
+  --ls-orange-dark: #e05e00;
+  --ls-orange-glow: rgba(255, 107, 0, 0.35);
+  --ls-orange-subtle: rgba(255, 107, 0, 0.12);
+  
+  --ls-shadow-floating: 0 4px 14px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --ls-shadow-lifted: 0 12px 24px rgba(0, 0, 0, 0.8), 0 0 0 1px #ff6b00, 0 4px 14px var(--ls-orange-glow);
+  --ls-radius-card: 12px;
+  --ls-radius-btn: 8px;
+}
+
+[data-theme="light"] {
+  --ls-bg-main: #f5f6f9;
+  --ls-bg-surface: #ffffff;
+  --ls-bg-card: #ffffff;
+  --ls-bg-card-hover: #f1f3f7;
+  --ls-border-subtle: #e2e8f0;
+  --ls-border-card: #e2e8f0;
+  --ls-border-highlight: #ff6b00;
+  
+  --ls-text-bright: #0f172a;
+  --ls-text-primary: #1e293b;
+  --ls-text-secondary: #475569;
+  --ls-text-muted: #64748b;
+  
+  --ls-orange: #ff6b00;
+  --ls-orange-light: #ff8533;
+  --ls-orange-dark: #e05e00;
+  --ls-orange-glow: rgba(255, 107, 0, 0.20);
+  --ls-orange-subtle: rgba(255, 107, 0, 0.08);
+  
+  --ls-shadow-floating: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  --ls-shadow-lifted: 0 10px 22px rgba(0, 0, 0, 0.14), 0 0 0 1px #ff6b00, 0 4px 12px var(--ls-orange-glow);
+  --ls-radius-card: 12px;
+  --ls-radius-btn: 8px;
+}
+
+/* Base Document */
+html, body {
+  background-color: var(--ls-bg-main) !important;
+  color: var(--ls-text-primary) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  color: var(--ls-text-bright) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--ls-text-primary);
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+a:hover, a:focus {
+  color: var(--ls-orange);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   YouTube-Style Top Navigation Bar
+   ========================================================================== */
+.navbar-default,
+.navbar-default.libsunya-navbar {
+  background: rgba(15, 18, 24, 0.96) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--ls-border-subtle) !important;
+  border-radius: 0 !important;
+  padding: 0 16px !important;
+  position: sticky;
+  top: 0;
+  z-index: 1040;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0px !important; /* Preserved user setting */
+  height: 56px !important;
+  min-height: 56px !important;
+}
+
+.libsunya-nav-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  height: 56px !important;
+  gap: 16px !important;
+}
+
+/* Left: Drawer Toggle & Brand */
+.libsunya-nav-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.libsunya-drawer-toggle {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  color: var(--ls-text-primary) !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 4px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+}
+.libsunya-drawer-toggle:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--ls-orange) !important;
+}
+.libsunya-drawer-toggle .libsunya-burger-line {
+  display: block !important;
+  width: 18px !important;
+  height: 2px !important;
+  background-color: currentColor !important;
+  border-radius: 2px !important;
+  transition: all 0.25s ease !important;
+}
+
+.libsunya-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+  font-size: 19px !important;
+  letter-spacing: -0.03em !important;
+  color: var(--ls-text-bright) !important;
+}
+.libsunya-brand:hover, .libsunya-brand:focus {
+  text-decoration: none !important;
+  color: var(--ls-text-bright) !important;
+}
+.libsunya-brand-logo {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+}
+.libsunya-brand-title span {
+  color: var(--ls-orange) !important;
+}
+
+/* Center: YouTube-style Centered Search Bar */
+.libsunya-nav-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1 !important;
+  max-width: 680px !important;
+  margin: 0 auto !important;
+}
+
+.libsunya-yt-search-form {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 10px !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.libsunya-search-group {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
+  max-width: 520px !important;
+  position: relative !important;
+}
+
+.libsunya-search-input {
+  background: #111319 !important;
+  border: 1px solid #282c37 !important;
+  border-radius: 9999px 0 0 9999px !important;
+  color: var(--ls-text-bright) !important;
+  height: 38px !important;
+  padding: 0 16px !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+.libsunya-search-input:focus {
+  border-color: var(--ls-orange) !important;
+  box-shadow: 0 0 0 2px var(--ls-orange-glow), inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  outline: none !important;
+  background: #151821 !important;
+}
+
+.libsunya-search-btn {
+  background: #20242e !important;
+  border: 1px solid #282c37 !important;
+  border-left: none !important;
+  border-radius: 0 9999px 9999px 0 !important;
+  color: #a1a1aa !important;
+  height: 38px !important;
+  width: 56px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+}
+.libsunya-search-btn:hover {
+  background: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  color: #000000 !important;
+}
+.libsunya-search-btn .glyphicon {
+  font-size: 13px !important;
+}
+
+/* Advanced Search Button (Logo + Written Text) */
+.libsunya-adv-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 38px !important;
+  padding: 0 14px !important;
+  background: #181b22 !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  border-radius: 9999px !important;
+  color: var(--ls-text-secondary) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+.libsunya-adv-btn:hover, .libsunya-adv-btn:focus {
+  border-color: var(--ls-orange) !important;
+  color: var(--ls-orange) !important;
+  background: var(--ls-bg-card-hover) !important;
+  text-decoration: none !important;
+  box-shadow: 0 0 10px var(--ls-orange-glow);
+}
+.libsunya-adv-btn .glyphicon {
+  font-size: 12px !important;
+}
+
+/* Right: Avatar Profile Button ONLY */
+.libsunya-nav-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-shrink: 0 !important;
+}
+
+.libsunya-profile-menu-container {
+  position: relative !important;
+}
+
+.libsunya-avatar-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2px solid #282c37 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.libsunya-avatar-btn:hover, .libsunya-avatar-btn:focus {
+  border-color: var(--ls-orange-light) !important;
+  transform: scale(1.06) !important;
+  box-shadow: 0 0 14px var(--ls-orange-glow) !important;
+  outline: none !important;
+}
+.libsunya-avatar-icon {
+  font-size: 15px !important;
+  color: #000000 !important;
+}
+
+/* User Profile Dropdown Menu */
+.libsunya-profile-dropdown-menu {
+  background: var(--ls-bg-surface) !important;
+  border: 1px solid var(--ls-border-card) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+  padding: 8px 0 !important;
+  min-width: 230px !important;
+  margin-top: 8px !important;
+  right: 0 !important;
+  left: auto !important;
+  overflow: hidden !important;
+  display: block !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-8px) scale(0.97) !important;
+  transform-origin: top right !important;
+  transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.18s !important;
+  pointer-events: none !important;
+  z-index: 1050 !important;
+}
+
+.libsunya-profile-menu-container.open .libsunya-profile-dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+}
+
+.libsunya-dropdown-user-header {
+  padding: 12px 18px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: rgba(12, 14, 18, 0.6) !important;
+}
+.libsunya-dropdown-avatar {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+.libsunya-dropdown-user-info {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+.libsunya-dropdown-user-info .user-name {
+  color: var(--ls-text-bright) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.libsunya-dropdown-user-info .user-role-badge {
+  background: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 2px 6px !important;
+  align-self: flex-start !important;
+  margin-top: 2px !important;
+}
+.libsunya-dropdown-user-info .user-role-text {
+  color: var(--ls-text-muted) !important;
+  font-size: 11px !important;
+}
+
+.libsunya-profile-dropdown-menu .divider {
+  background-color: var(--ls-border-subtle) !important;
+  margin: 6px 0 !important;
+}
+
+.libsunya-dropdown-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 9px 18px !important;
+  color: var(--ls-text-primary) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+}
+.libsunya-dropdown-link:hover, .libsunya-dropdown-link:focus {
+  background: var(--ls-bg-card-hover) !important;
+  color: var(--ls-orange) !important;
+  text-decoration: none !important;
+}
+.libsunya-dropdown-link.text-danger-hover:hover {
+  color: #ef4444 !important;
+}
+
+/* Dark / Light Mode Dropdown Switch */
+.libsunya-dropdown-theme-item {
+  padding: 4px 14px !important;
+}
+
+.libsunya-theme-toggle-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  transition: all 0.2s ease !important;
+}
+.libsunya-theme-toggle-row:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+[data-theme="light"] .libsunya-theme-toggle-row {
+  background: #f1f5f9 !important;
+}
+[data-theme="light"] .libsunya-theme-toggle-row:hover {
+  background: #e2e8f0 !important;
+}
+
+.libsunya-theme-label-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--ls-text-bright) !important;
+}
+
+.libsunya-switch-wrapper {
+  position: relative !important;
+  display: inline-block !important;
+  width: 44px !important;
+  height: 24px !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
+.libsunya-toggle-input {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  margin: 0 !important;
+}
+
+.libsunya-toggle-slider {
+  position: absolute !important;
+  cursor: pointer !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: #3f3f46 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 24px !important;
+  margin: 0 !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+}
+
+.libsunya-toggle-slider:before {
+  position: absolute !important;
+  content: "" !important;
+  height: 18px !important;
+  width: 18px !important;
+  left: 2px !important;
+  bottom: 2px !important;
+  background-color: #ffffff !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.libsunya-toggle-input:checked + .libsunya-toggle-slider {
+  background-color: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  box-shadow: 0 0 10px var(--ls-orange-glow) !important;
+}
+
+.libsunya-toggle-input:checked + .libsunya-toggle-slider:before {
+  transform: translateX(20px) !important;
+  background-color: #000000 !important;
+}
+
+[data-theme="light"] .libsunya-toggle-slider {
+  background-color: #cbd5e1 !important;
+}
+[data-theme="light"] .libsunya-toggle-slider:before {
+  background-color: #ffffff !important;
+}
+[data-theme="light"] .libsunya-toggle-input:checked + .libsunya-toggle-slider {
+  background-color: var(--ls-orange) !important;
+}
+[data-theme="light"] .libsunya-toggle-input:checked + .libsunya-toggle-slider:before {
+  background-color: #ffffff !important;
+}
+
+/* ==========================================================================
+   Off-Canvas Drawer (Slide-out Sidebar)
+   ========================================================================== */
+.libsunya-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.libsunya-drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.libsunya-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 86vw;
+  background: var(--ls-bg-surface);
+  border-right: 1px solid var(--ls-border-subtle);
+  z-index: 2001;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.8);
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.libsunya-drawer.active {
+  transform: translateX(0);
+}
+
+.libsunya-drawer-header {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ls-border-subtle);
+  background: rgba(12, 14, 18, 0.7);
+}
+.libsunya-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--ls-text-bright);
+}
+.libsunya-drawer-logo {
+  width: 28px;
+  height: 28px;
+}
+.text-orange {
+  color: var(--ls-orange) !important;
+}
+
+.libsunya-drawer-close {
+  background: var(--ls-bg-card);
+  border: 1px solid var(--ls-border-subtle);
+  color: var(--ls-text-secondary);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.libsunya-drawer-close:hover {
+  border-color: var(--ls-orange);
+  color: var(--ls-orange);
+  background: var(--ls-bg-card-hover);
+}
+
+.libsunya-drawer-body {
+  padding: 16px 14px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ls-border-subtle) transparent;
+}
+.libsunya-drawer-body::-webkit-scrollbar {
+  width: 6px;
+}
+.libsunya-drawer-body::-webkit-scrollbar-thumb {
+  background: var(--ls-border-subtle);
+  border-radius: 3px;
+}
+
+/* Drawer Navigation Items */
+.navigation ul.list-unstyled {
+  margin: 0;
+  padding: 0;
+}
+.navigation .nav-head {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ls-orange);
+  letter-spacing: 0.1em;
+  padding: 14px 12px 6px 12px;
+  border-top: 1px solid var(--ls-border-subtle);
+  margin-top: 10px;
+}
+.navigation .nav-head:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 4px;
+}
+
+.navigation li a {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  color: var(--ls-text-secondary) !important;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+.navigation li a:hover {
+  background: var(--ls-bg-card-hover) !important;
+  color: var(--ls-text-bright) !important;
+  transform: translateX(4px);
+}
+.navigation li.active a {
+  background: var(--ls-orange-subtle) !important;
+  color: var(--ls-orange) !important;
+  font-weight: 700;
+  border-left: 3px solid var(--ls-orange);
+}
+.navigation li.active a .glyphicon {
+  color: var(--ls-orange) !important;
+}
+.navigation li a .glyphicon {
+  font-size: 14px;
+  color: var(--ls-text-muted);
+  transition: color 0.2s ease;
+}
+.navigation li a:hover .glyphicon {
+  color: var(--ls-orange);
+}
+
+.navigation .badge {
+  background-color: var(--ls-bg-card) !important;
+  color: var(--ls-orange) !important;
+  border: 1px solid var(--ls-border-subtle);
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.navigation .create-shelf a {
+  background: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-top: 12px;
+  justify-content: center;
+  box-shadow: 0 4px 14px var(--ls-orange-glow);
+}
+.navigation .create-shelf a:hover {
+  background: var(--ls-orange-light) !important;
+  transform: translateY(-2px);
+  color: #000000 !important;
+}
+
+/* ==========================================================================
+   Full-Width Main Container
+   ========================================================================== */
+.libsunya-container {
+  padding: 0 16px 36px 16px !important;
+  max-width: 100% !important;
+}
+.libsunya-main-wrapper {
+  width: 100%;
+}
+
+/* Quick Category Filter Bar (Pills) */
+.libsunya-pill-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 4px 0 4px 0; /* Preserved user setting */
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--ls-border-subtle);
+}
+.libsunya-pill-bar::-webkit-scrollbar {
+  display: none;
+}
+.libsunya-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ls-bg-surface);
+  border: 1px solid var(--ls-border-subtle);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ls-text-secondary);
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+  flex-shrink: 0;
+}
+.libsunya-pill:hover {
+  background: var(--ls-bg-card-hover);
+  border-color: var(--ls-orange);
+  color: var(--ls-text-bright);
+  transform: translateY(-1px);
+}
+.libsunya-pill.active {
+  background: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 14px var(--ls-orange-glow);
+}
+.libsunya-pill .glyphicon {
+  font-size: 11px;
+}
+
+/* Section Titles (Used on other pages like series/author) */
+.discover h1, .discover h2, .discover h3 {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  margin-bottom: 14px !important;
+  color: var(--ls-text-bright) !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Sort & Filter Controls */
+.filterheader {
+  margin-bottom: 18px !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: var(--ls-bg-surface);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ls-border-subtle);
+}
+.filterheader .btn {
+  background: var(--ls-bg-card) !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  color: var(--ls-text-secondary) !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+  transition: all 0.2s ease;
+}
+.filterheader .btn:hover {
+  background: var(--ls-bg-card-hover) !important;
+  border-color: var(--ls-orange) !important;
+  color: var(--ls-orange) !important;
+}
+.filterheader .btn.active {
+  background: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-weight: 700;
+  box-shadow: 0 2px 10px var(--ls-orange-glow);
+}
+
+/* ==========================================================================
+   Grid & Floating Cards Stream (10px Strict Separation & Wrap to Next Row)
+   ========================================================================== */
+.row.display-flex,
+.discover .row.display-flex,
+.libsunya-pinterest-grid {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* Individual Book Card (Dense, Compact Pin with 10px Separation & No Overlap) */
+.container-fluid .book,
+.container-fluid .book.session,
+.book.session,
+.book {
+  width: 175px !important;
+  max-width: 175px !important;
+  min-width: 175px !important;
+  margin-right: 10px !important;
+  margin-bottom: 10px !important;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  background: var(--ls-bg-card) !important;
+  border: 1px solid var(--ls-border-card) !important;
+  border-radius: var(--ls-radius-card) !important;
+  overflow: hidden !important;
+  box-shadow: var(--ls-shadow-floating) !important;
+  box-sizing: border-box !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.25s ease !important;
+  will-change: transform, box-shadow;
+}
+
+@media (max-width: 480px) {
+  .container-fluid .book,
+  .container-fluid .book.session,
+  .book.session,
+  .book {
+    width: calc(50% - 10px) !important;
+    max-width: calc(50% - 10px) !important;
+    min-width: calc(50% - 10px) !important;
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* Floating Elevation on Hover */
+.container-fluid .book:hover,
+.book:hover {
+  transform: translateY(-5px) !important;
+  border-color: var(--ls-orange) !important;
+  box-shadow: var(--ls-shadow-lifted) !important;
+  z-index: 10;
+}
+
+/* Book Cover - Fixed 240px Height So Cards Never Overlap */
+.container-fluid .book .cover,
+.book .cover {
+  width: 100% !important;
+  height: 240px !important;
+  position: relative !important;
+  margin-bottom: 0 !important;
+  background: var(--ls-bg-surface) !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 480px) {
+  .container-fluid .book .cover,
+  .book .cover {
+    height: 190px !important;
+  }
+}
+
+.container-fluid .book .cover a,
+.book .cover a {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  text-decoration: none !important;
+}
+
+.container-fluid .book .cover span.img,
+.book .cover span.img {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.container-fluid .book .cover span.img img,
+.book .cover span.img img,
+.container-fluid .book .cover span img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  position: relative !important;
+  border: none !important;
+  border-radius: var(--ls-radius-card) var(--ls-radius-card) 0 0 !important;
+  box-shadow: none !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.book:hover .cover span.img img {
+  transform: scale(1.03);
+}
+
+/* Read / Finished Badge */
+.cover .badge.read {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-size: 10px;
+  padding: 4px 6px;
+  border-radius: 9999px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+}
+
+/* Series / Collection Badge on Cover */
+.cover .badge:not(.read) {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(12, 14, 18, 0.88) !important;
+  color: var(--ls-orange) !important;
+  border: 1px solid var(--ls-border-subtle);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 2px 6px;
+  z-index: 3;
+}
+
+/* Book Metadata Container (Compact Pinterest Style) */
+.container-fluid .book .meta,
+.book .meta {
+  padding: 8px 10px 10px 10px !important;
+  margin-top: 0 !important;
+  background: var(--ls-bg-card) !important;
+  border-top: 1px solid var(--ls-border-subtle);
+  transition: background 0.25s ease;
+}
+.book:hover .meta {
+  background: var(--ls-bg-card-hover) !important;
+}
+
+.container-fluid .book .meta .title,
+.book .meta .title {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--ls-text-bright) !important;
+  line-height: 1.25 !important;
+  margin: 0 0 3px 0 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+.book:hover .meta .title {
+  color: var(--ls-orange-light) !important;
+}
+
+.container-fluid .book .meta .author,
+.book .meta .author {
+  font-size: 11px !important;
+  color: var(--ls-text-secondary) !important;
+  margin: 0 0 3px 0 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.book .meta .author a {
+  color: var(--ls-text-secondary) !important;
+  transition: color 0.2s ease;
+}
+.book .meta .author a:hover {
+  color: var(--ls-orange) !important;
+  text-decoration: none;
+}
+
+.container-fluid .book .meta .series,
+.book .meta .series {
+  font-size: 10px !important;
+  color: var(--ls-orange) !important;
+  margin: 0 0 3px 0 !important;
+  font-weight: 500;
+}
+.book .meta .series a {
+  color: var(--ls-orange) !important;
+}
+
+/* Rating Stars */
+.book .meta .rating,
+.container-fluid .book .meta .rating {
+  margin-top: 2px !important;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+.rating .glyphicon-star.good {
+  color: var(--ls-orange) !important;
+  font-size: 10px;
+}
+.rating .glyphicon-star-empty {
+  color: #3b3f4d !important;
+  font-size: 10px;
+}
+
+/* ==========================================================================
+   Buttons & Form Controls
+   ========================================================================== */
+.btn-primary {
+  background: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border-radius: var(--ls-radius-btn) !important;
+  padding: 8px 16px;
+  box-shadow: 0 4px 14px var(--ls-orange-glow);
+  transition: all 0.2s ease !important;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background: var(--ls-orange-light) !important;
+  border-color: var(--ls-orange-light) !important;
+  color: #000000 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--ls-orange-glow);
+}
+
+.btn-default {
+  background: var(--ls-bg-card) !important;
+  border-color: var(--ls-border-subtle) !important;
+  color: var(--ls-text-primary) !important;
+  border-radius: var(--ls-radius-btn) !important;
+  padding: 8px 16px;
+  transition: all 0.2s ease !important;
+}
+.btn-default:hover,
+.btn-default:focus {
+  background: var(--ls-bg-card-hover) !important;
+  border-color: var(--ls-orange) !important;
+  color: var(--ls-orange) !important;
+}
+
+.btn-danger {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  border-radius: var(--ls-radius-btn) !important;
+}
+
+.form-control {
+  background-color: var(--ls-bg-card) !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  color: var(--ls-text-bright) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.form-control:focus {
+  border-color: var(--ls-orange) !important;
+  box-shadow: 0 0 0 3px var(--ls-orange-glow) !important;
+}
+
+/* ==========================================================================
+   Modals & Popups
+   ========================================================================== */
+.modal-content {
+  background: var(--ls-bg-surface) !important;
+  border: 1px solid var(--ls-border-card) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9) !important;
+  color: var(--ls-text-primary) !important;
+  overflow: hidden;
+}
+.modal-header {
+  border-bottom: 1px solid var(--ls-border-subtle) !important;
+  background: rgba(12, 14, 18, 0.6);
+  padding: 16px 24px !important;
+}
+.modal-header .close {
+  color: var(--ls-text-bright) !important;
+  opacity: 0.7;
+  font-size: 24px;
+}
+.modal-header .close:hover {
+  color: var(--ls-orange) !important;
+  opacity: 1;
+}
+.modal-title {
+  color: var(--ls-text-bright) !important;
+  font-weight: 700;
+}
+.modal-body {
+  padding: 24px !important;
+}
+.modal-footer {
+  border-top: 1px solid var(--ls-border-subtle) !important;
+  padding: 16px 24px !important;
+}
+
+/* ==========================================================================
+   Book Details View
+   ========================================================================== */
+.single {
+  background: var(--ls-bg-surface);
+  border: 1px solid var(--ls-border-subtle);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--ls-shadow-floating);
+  margin-top: 12px;
+}
+.single #detailcover {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: var(--ls-shadow-lifted);
+  border: 1px solid var(--ls-border-card);
+}
+.book-meta h1, .book-meta h2 {
+  margin-top: 0;
+}
+.book-meta .description {
+  color: var(--ls-text-secondary);
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
+/* Tags in Details */
+.book-meta .btn-info {
+  background: var(--ls-bg-card) !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  color: var(--ls-text-primary) !important;
+  border-radius: 9999px !important;
+  padding: 4px 10px !important;
+}
+.book-meta .btn-info:hover {
+  border-color: var(--ls-orange) !important;
+  color: var(--ls-orange) !important;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.pagination {
+  margin: 28px 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  list-style: none !important;
+}
+.pagination > li > a,
+.pagination > li > span {
+  background-color: var(--ls-bg-surface) !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  color: var(--ls-text-primary) !important;
+  border-radius: 8px !important;
+  padding: 7px 12px !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.pagination > li > a:hover {
+  background-color: var(--ls-bg-card-hover) !important;
+  border-color: var(--ls-orange) !important;
+  color: var(--ls-orange) !important;
+}
+.pagination > .active > a,
+.pagination > .active > span {
+  background-color: var(--ls-orange) !important;
+  border-color: var(--ls-orange) !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 14px var(--ls-orange-glow);
+}
+
+/* ==========================================================================
+   Login & Admin Wells
+   ========================================================================== */
+.well {
+  background: var(--ls-bg-surface) !important;
+  border: 1px solid var(--ls-border-card) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--ls-shadow-floating) !important;
+  padding: 30px !important;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+  background: var(--ls-bg-surface) !important;
+  border: 1px solid var(--ls-border-card) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8) !important;
+  padding: 8px !important;
+}
+.dropdown-menu > li > a {
+  color: var(--ls-text-primary) !important;
+  border-radius: 6px;
+  padding: 8px 14px !important;
+  transition: all 0.15s ease;
+}
+.dropdown-menu > li > a:hover {
+  background: var(--ls-bg-card-hover) !important;
+  color: var(--ls-orange) !important;
+}
+
+/* Table styling */
+.table {
+  color: var(--ls-text-primary) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid var(--ls-border-subtle) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+.table > thead > tr > th {
+  background: var(--ls-bg-surface) !important;
+  border-bottom: 2px solid var(--ls-border-subtle) !important;
+  color: var(--ls-text-bright) !important;
+  font-weight: 700;
+  padding: 12px 16px !important;
+}
+.table > tbody > tr > td,
+.table > tbody > tr > th {
+  border-top: 1px solid var(--ls-border-subtle) !important;
+  padding: 12px 16px !important;
+}
+.table > tbody > tr:hover {
+  background: var(--ls-bg-card-hover) !important;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 12px !important;
+  font-weight: 500;
+}
+.alert-success {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+  color: #4ade80 !important;
+}
+.alert-danger {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #f87171 !important;
+}
+.alert-info {
+  background: rgba(255, 107, 0, 0.15) !important;
+  border-color: rgba(255, 107, 0, 0.3) !important;
+  color: var(--ls-orange-light) !important;
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+.libsunya-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--ls-bg-card);
+  border: 1px dashed var(--ls-border-card);
+  border-radius: 20px;
+  margin: 30px auto;
+  max-width: 580px;
+  box-shadow: var(--ls-shadow-floating);
+}
+.libsunya-empty-state .empty-icon {
+  width: 68px;
+  height: 68px;
+  background: var(--ls-orange-subtle);
+  color: var(--ls-orange);
+  border: 1px solid var(--ls-orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 18px auto;
+  box-shadow: 0 0 20px var(--ls-orange-glow);
+}
+.libsunya-empty-state h3 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--ls-text-bright) !important;
+  margin-bottom: 8px !important;
+  justify-content: center !important;
+}
+.libsunya-empty-state p {
+  color: var(--ls-text-secondary);
+  font-size: 13px;
+  max-width: 440px;
+  margin: 0 auto 18px auto;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 767px) {
+  .navbar-default,
+  .navbar-default.libsunya-navbar {
+    padding: 0 10px !important;
+  }
+  .libsunya-nav-container {
+    gap: 8px !important;
+  }
+  .libsunya-brand-title {
+    display: none !important; /* Save space for centered search on mobile */
+  }
+  .libsunya-nav-center {
+    max-width: 100% !important;
+  }
+  .libsunya-search-input {
+    font-size: 13px !important;
+    padding: 0 12px !important;
+    height: 36px !important;
+  }
+  .libsunya-search-btn {
+    width: 44px !important;
+    height: 36px !important;
+  }
+  .libsunya-adv-btn {
+    padding: 0 10px !important;
+    height: 36px !important;
+    font-size: 11px !important;
+  }
+  .libsunya-adv-text {
+    display: inline !important;
+  }
+  .libsunya-profile-dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+    min-width: 210px !important;
+    max-width: 90vw !important;
+  }
+  .libsunya-container {
+    padding: 0 8px 30px 8px !important;
+  }
+  .single {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .libsunya-adv-text {
+    display: none !important; /* Only hide written text on ultra-narrow screens */
+  }
+}
+
+/* ==========================================================================
+   Light Mode Theme Styling Overrides
+   ========================================================================== */
+[data-theme="light"] body {
+  background-color: var(--ls-bg-main) !important;
+  color: var(--ls-text-primary) !important;
+}
+
+[data-theme="light"] .navbar-default,
+[data-theme="light"] .navbar-default.libsunya-navbar {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid var(--ls-border-subtle) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .libsunya-brand {
+  color: var(--ls-text-bright) !important;
+}
+
+[data-theme="light"] .libsunya-drawer-toggle {
+  color: var(--ls-text-primary) !important;
+}
+
+[data-theme="light"] .libsunya-search-input {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: var(--ls-text-bright) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .libsunya-search-input:focus {
+  background: #ffffff !important;
+  border-color: var(--ls-orange) !important;
+}
+
+[data-theme="light"] .libsunya-search-btn {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="light"] .libsunya-adv-btn {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="light"] .libsunya-profile-dropdown-menu {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] .libsunya-dropdown-user-header {
+  background: #f8fafc !important;
+}
+
+[data-theme="light"] .libsunya-dropdown-link {
+  color: #1e293b !important;
+}
+[data-theme="light"] .libsunya-dropdown-link:hover {
+  background: #f1f5f9 !important;
+  color: var(--ls-orange) !important;
+}
+
+[data-theme="light"] .libsunya-drawer {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .libsunya-drawer-header {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .navigation li a {
+  color: #475569 !important;
+}
+[data-theme="light"] .navigation li a:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .libsunya-pill {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+[data-theme="light"] .libsunya-pill:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .libsunya-pill.active {
+  background: var(--ls-orange) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .container-fluid .book,
+[data-theme="light"] .book {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .container-fluid .book .cover,
+[data-theme="light"] .book .cover {
+  background: #f1f5f9 !important;
+}
+
+[data-theme="light"] .container-fluid .book .meta,
+[data-theme="light"] .book .meta {
+  background: #ffffff !important;
+  border-top-color: #f1f5f9 !important;
+}
+[data-theme="light"] .book:hover .meta {
+  background: #f8fafc !important;
+}
+
+[data-theme="light"] .container-fluid .book .meta .title,
+[data-theme="light"] .book .meta .title {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .container-fluid .book .meta .author,
+[data-theme="light"] .book .meta .author {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .modal-content {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+[data-theme="light"] .modal-header {
+  background: #f8fafc !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+[data-theme="light"] .modal-footer {
+  background: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+}

@@ -8,138 +8,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0c0e12">
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('libsunya-theme');
+          if (saved === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
     {% if g.google_site_verification|length > 0 %}
       <meta name="google-site-verification" content="{{g.google_site_verification}}">
     {% endif %}
-    <!-- Bootstrap -->
-    <link rel="apple-touch-icon" sizes="140x140" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Favicon & Styles -->
+    <link rel="apple-touch-icon" sizes="140x140" href="{{ url_for('static', filename='icon.svg') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.svg') }}">
     <link href="{{ url_for('static', filename='css/libs/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     {% block header %}{% endblock %}
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/upload.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/libsunya.css') }}" rel="stylesheet" media="screen">
   </head>
-  <body class="{{ page }} {{ bodyClass }}">
-    <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">{{_('Toggle Navigation')}}</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{url_for('web.index')}}">{{instance}}</a>
-        </div>
-        {% if current_user.is_authenticated or g.allow_anonymous %}
-          <form class="navbar-form navbar-left" role="search" action="{{url_for('search.simple_search')}}" method="GET">
-            <div class="form-group input-group input-group-sm">
-              <label for="query" class="sr-only">{{_('Search')}}</label>
-              <input type="text" class="form-control" id="query" name="query" placeholder="{{_('Search Library')}}" value="{{searchterm}}">
-              <span class="input-group-btn">
-                <button type="submit" id="query_submit" class="btn btn-default">{{_('Search')}}</button>
-              </span>
-            </div>
-          </form>
-        {% endif %}
-        <div class="navbar-collapse collapse">
+  <body class="{{ page }} {{ bodyClass }} libsunya-theme">
+    <!-- YouTube-style Modern Top Navigation Bar -->
+    <header class="navbar navbar-default navbar-static-top libsunya-navbar" role="navigation">
+      <div class="libsunya-nav-container">
+        <!-- Left: Drawer Toggle & Brand Logo -->
+        <div class="libsunya-nav-left">
           {% if current_user.is_authenticated or g.allow_anonymous %}
-          <ul class="nav navbar-nav ">
-            <li><a href="{{url_for('search.advanced_search')}}" id="advanced_search"><span class="glyphicon glyphicon-search"></span><span class="hidden-sm"> {{_('Advanced Search')}}</span></a></li>
-            {% if simple==true %} <li><a href="{{url_for('basic.index')}}" id="basic"><span class="glyphicon glyphicon-phone"></span><span>{{_('Simple Theme')}}</span></a><li>{% endif %}
-          </ul>
+          <button type="button" id="libsunya-drawer-toggle" class="libsunya-drawer-toggle" title="{{_('Categories & Shelves')}}" aria-label="{{_('Toggle Menu')}}">
+            <span class="libsunya-burger-line"></span>
+            <span class="libsunya-burger-line"></span>
+            <span class="libsunya-burger-line"></span>
+          </button>
           {% endif %}
-          <ul class="nav navbar-nav navbar-right" id="main-nav">
-            {% if current_user.is_authenticated or g.allow_anonymous %}
-              {% if current_user.role_upload() and g.allow_upload %}
-                  <li>
-                    <form id="form-upload" class="navbar-form" action="{{ url_for('edit-book.upload') }}" data-title="{{_('Uploading...')}}" data-footer="{{_('Close')}}" data-failed="{{_('Error')}}" data-message="{{_('Upload done, processing, please wait...')}}" method="post" enctype="multipart/form-data">
-                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                      <div class="form-group">
-                        <span class="btn btn-default btn-file">{{_('Upload')}}<input id="btn-upload" name="btn-upload"
-                        type="file" accept="{% for format in accept %}.{% if format != ''%}{{format}}{% else %}*{% endif %}{{ ',' if not loop.last }}{% endfor %}" multiple></span>
-                        <input class="hide" id="btn-upload2" name="btn-upload2" type="file" accept="{% for format in accept %}.{% if format != ''%}{{format}}{% else %}*{% endif %}{{ ',' if not loop.last }}{% endfor %}">
-                      </div>
-                    </form>
-                  </li>
-              {% endif %}
-              {% if not current_user.is_anonymous and not simple%}
-                <li class="top_tasks"><a id="top_tasks" href="{{url_for('tasks.get_tasks_status')}}"><span class="glyphicon glyphicon-tasks"></span> <span class="hidden-sm">{{_('Tasks')}}</span></a></li>
-              {% endif %}
-              {% if current_user.role_admin() %}
-                <li><a id="top_admin" href="{{url_for('admin.admin')}}"><span class="glyphicon glyphicon-dashboard"></span> <span class="hidden-sm">{{_('Admin')}}</span></a></li>
-              {% endif %}
-              <li><a id="top_user" href="{% if not current_user.is_anonymous %}{{url_for('web.profile')}}{% else %}{{url_for('web.login', next=(request.path + "?" + request.query_string.decode("utf-8")).rstrip("?"))}}{% endif %}"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">{{current_user.name}}</span></a></li>
-                {% if not current_user.is_anonymous %}
-                <li><a id="logout" href="{{url_for('web.logout', next=(request.path + "?" + request.query_string.decode("utf-8")).rstrip("?"))}}"><span class="glyphicon glyphicon-log-out"></span> <span class="hidden-sm">{{_('Logout')}}</span></a></li>
-                {% endif %}
+          <a class="libsunya-brand" href="{{url_for('web.index')}}" title="LibSunya Home">
+            <img src="{{ url_for('static', filename='img/libsunya-logo.svg') }}" class="libsunya-brand-logo" alt="LibSunya Logo">
+            <span class="libsunya-brand-title">Lib<span>Sunya</span></span>
+          </a>
+        </div>
+
+        <!-- Center: Search Bar & Advanced Search Button (Centered like YouTube) -->
+        <div class="libsunya-nav-center">
+          {% if current_user.is_authenticated or g.allow_anonymous %}
+          <form class="libsunya-yt-search-form" role="search" action="{{url_for('search.simple_search')}}" method="GET">
+            <div class="libsunya-search-group">
+              <input type="text" class="libsunya-search-input" id="query" name="query" placeholder="{{_('Search Library...')}}" value="{{searchterm}}" autocomplete="off">
+              <button type="submit" id="query_submit" class="libsunya-search-btn" title="{{_('Search')}}">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </div>
+            <a href="{{url_for('search.advanced_search')}}" id="advanced_search" class="libsunya-adv-btn" title="{{_('Advanced Search')}}">
+              <span class="glyphicon glyphicon-filter"></span>
+              <span class="libsunya-adv-text">{{_('Advanced')}}</span>
+            </a>
+          </form>
+          {% endif %}
+        </div>
+
+        <!-- Right: Profile Picture / Avatar ONLY with Dropdown Menu -->
+        <div class="libsunya-nav-right">
+          <!-- Hidden upload form so background upload JS remains 100% operational -->
+          {% if current_user.is_authenticated or g.allow_anonymous %}
+            {% if current_user.role_upload() and g.allow_upload %}
+              <form id="form-upload" class="hide" action="{{ url_for('edit-book.upload') }}" data-title="{{_('Uploading...')}}" data-footer="{{_('Close')}}" data-failed="{{_('Error')}}" data-message="{{_('Upload done, processing, please wait...')}}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input id="btn-upload" name="btn-upload" type="file" accept="{% for format in accept %}.{% if format != ''%}{{format}}{% else %}*{% endif %}{{ ',' if not loop.last }}{% endfor %}" multiple>
+                <input class="hide" id="btn-upload2" name="btn-upload2" type="file" accept="{% for format in accept %}.{% if format != ''%}{{format}}{% else %}*{% endif %}{{ ',' if not loop.last }}{% endfor %}">
+              </form>
             {% endif %}
-            {% if g.allow_registration and not current_user.is_authenticated %}
-            <li><a id="login" href="{{url_for('web.login')}}"><span class="glyphicon glyphicon-log-in"></span> {{_('Login')}}</a></li>
-            <li><a id="register" href="{{url_for('web.register')}}"><span class="glyphicon glyphicon-user"></span> {{_('Register')}}</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-    {% for message in get_flashed_messages(with_categories=True) %}
-      {%if message[0] == "error" %}
-      <div class="row-fluid text-center" >
-        <div id="flash_danger" class="alert alert-danger">{{ message[1] }}</div>
-      </div>
-      {%endif%}
-      {%if message[0] == "info" %}
-      <div class="row-fluid text-center">
-        <div id="flash_info" class="alert alert-info">{{ message[1] }}</div>
-      </div>
-      {%endif%}
-      {%if message[0] == "warning" %}
-      <div class="row-fluid text-center">
-        <div id="flash_warning" class="alert alert-warning">{{ message[1] }}</div>
-      </div>
-      {%endif%}
-      {%if message[0] == "success" %}
-      <div class="row-fluid text-center">
-        <div id="flash_success" class="alert alert-success">{{ message[1] }}</div>
-      </div>
-      {%endif%}
-    {% endfor %}
-    {% block flash %}{% endblock %}
-    <div class="container-fluid">
-      <div class="row-fluid">
-        {% if current_user.is_authenticated or g.allow_anonymous %}
-        <div class="col-sm-2">
-          <nav class="navigation">
-            <ul class="list-unstyled" id="scnd-nav" intent in-standard-append="nav.navigation" in-mobile-after="#main-nav" in-mobile-class="nav navbar-nav">
-              <li class="nav-head hidden-xs">{{_('Browse')}}</li>
-              {% for element in sidebar %}
-                {% if current_user.check_visibility(element['visibility']) and element['public'] %}
-                    <li id="nav_{{element['id']}}" {% if page == element['page'] %}class="active"{% endif %}><a href="{% if element['no_param'] %}{{url_for(element['link'], data=element['page'])}}{%else%}{{url_for(element['link'], data=element['page'], sort_param='stored')}}{% endif %}"><span class="glyphicon {{element['glyph']}}"></span> {{_(element['text'])}}</a></li>
-                {% endif %}
-              {% endfor %}
-              {% if current_user.is_authenticated or g.allow_anonymous %}
-                <li class="nav-head hidden-xs public-shelves">{{_('Shelves')}}</li>
-                {% for shelf in g.shelves_access %}
-                  <li><a href="{{url_for('shelf.show_shelf', shelf_id=shelf.id)}}"><span class="glyphicon glyphicon-list shelf"></span> {{shelf.name|shortentitle(40)}}{% if shelf.is_public == 1 %} {{_('(Public)')}}{% endif %} <span class="badge badge-sm">{{shelf.books.all()|length}}</span></a></li>
-                {% endfor %}
+          {% endif %}
+
+          <div class="libsunya-profile-menu-container dropdown" id="libsunya-profile-dropdown">
+            <button type="button" class="libsunya-avatar-btn dropdown-toggle" id="libsunyaAvatarMenu" aria-haspopup="true" aria-expanded="false" title="{{ current_user.name if current_user.is_authenticated else _('Account') }}">
               {% if not current_user.is_anonymous %}
-                <li id="nav_createshelf" class="create-shelf"><a href="{{url_for('shelf.create_shelf')}}">{{_('Create a Shelf')}}</a></li>
-                <li id="nav_about" {% if page == 'stat' %}class="active"{% endif %}><a href="{{url_for('about.stats')}}"><span class="glyphicon glyphicon-info-sign"></span> {{_('About')}}</a></li>
+                <span class="libsunya-avatar-initial">{{ current_user.name[:1]|upper }}</span>
+              {% else %}
+                <span class="libsunya-avatar-icon glyphicon glyphicon-user"></span>
               {% endif %}
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-right libsunya-profile-dropdown-menu" aria-labelledby="libsunyaAvatarMenu">
+              {% if not current_user.is_anonymous %}
+                <li class="libsunya-dropdown-user-header">
+                  <div class="libsunya-dropdown-avatar">{{ current_user.name[:1]|upper }}</div>
+                  <div class="libsunya-dropdown-user-info">
+                    <span class="user-name">{{ current_user.name }}</span>
+                    {% if current_user.role_admin() %}
+                      <span class="badge user-role-badge">Admin</span>
+                    {% else %}
+                      <span class="user-role-text">Reader</span>
+                    {% endif %}
+                  </div>
+                </li>
+                <li role="separator" class="divider"></li>
+                {% if current_user.role_upload() and g.allow_upload %}
+                  <li>
+                    <label for="btn-upload" class="libsunya-dropdown-link" style="cursor: pointer; margin: 0; width: 100%; font-weight: normal;">
+                      <span class="glyphicon glyphicon-upload text-orange"></span> {{_('Upload Book')}}
+                    </label>
+                  </li>
+                {% endif %}
+                <li>
+                  <a href="{{url_for('web.profile')}}" class="libsunya-dropdown-link">
+                    <span class="glyphicon glyphicon-user text-orange"></span> {{_('Your Profile')}}
+                  </a>
+                </li>
+                {% if not simple %}
+                  <li>
+                    <a href="{{url_for('tasks.get_tasks_status')}}" id="top_tasks" class="libsunya-dropdown-link">
+                      <span class="glyphicon glyphicon-tasks text-orange"></span> {{_('Tasks')}}
+                    </a>
+                  </li>
+                {% endif %}
+                {% if current_user.role_admin() %}
+                  <li>
+                    <a href="{{url_for('admin.admin')}}" id="top_admin" class="libsunya-dropdown-link">
+                      <span class="glyphicon glyphicon-cog text-orange"></span> {{_('Admin Settings')}}
+                    </a>
+                  </li>
+                {% endif %}
+                {% if simple==true %}
+                  <li>
+                    <a href="{{url_for('basic.index')}}" id="basic" class="libsunya-dropdown-link">
+                      <span class="glyphicon glyphicon-phone text-orange"></span> {{_('Simple Theme')}}
+                    </a>
+                  </li>
+                {% endif %}
+              {% else %}
+                <li class="libsunya-dropdown-user-header">
+                  <div class="libsunya-dropdown-avatar"><span class="glyphicon glyphicon-user"></span></div>
+                  <div class="libsunya-dropdown-user-info">
+                    <span class="user-name">Guest</span>
+                    <span class="user-role-text">{{_('Sign in for full access')}}</span>
+                  </div>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{{url_for('web.login')}}" id="login" class="libsunya-dropdown-link">
+                    <span class="glyphicon glyphicon-log-in text-orange"></span> {{_('Login')}}
+                  </a>
+                </li>
+                {% if g.allow_registration %}
+                  <li>
+                    <a href="{{url_for('web.register')}}" id="register" class="libsunya-dropdown-link">
+                      <span class="glyphicon glyphicon-edit text-orange"></span> {{_('Register')}}
+                    </a>
+                  </li>
+                {% endif %}
               {% endif %}
 
-            </ul>
-          </nav>
-        </div>
-        {% endif %}
-        <div class="col-sm-10">
-          {% block body %}{% endblock %}
-          {% if pagination and (pagination.has_next or pagination.has_prev) %}
-            <div class="pagination">
-              {% if pagination.has_prev %}
-              <li class="page-item page-previous"><a class="page-link" aria-label="next page" href="{{ (pagination.page - 1)|url_for_other_page }}">&laquo; {{_('Previous')}}</a></li>
+              <!-- Theme Toggle: Dark / Light Mode -->
+              <li role="separator" class="divider"></li>
+              <li class="libsunya-dropdown-theme-item">
+                <div class="libsunya-theme-toggle-row" id="libsunya-theme-toggle-btn" role="button" tabindex="0" title="{{_('Switch Dark / Light mode')}}">
+                  <div class="libsunya-theme-label-group">
+                    <span class="glyphicon glyphicon-adjust text-orange" id="libsunya-theme-icon"></span>
+                    <span class="libsunya-theme-text" id="libsunya-theme-text">{{_('Dark Mode')}}</span>
+                  </div>
+                  <div class="libsunya-switch-wrapper">
+                    <input type="checkbox" id="libsunyaThemeToggleCheckbox" class="libsunya-toggle-input" checked aria-label="{{_('Toggle Dark/Light Mode')}}">
+                    <label for="libsunyaThemeToggleCheckbox" class="libsunya-toggle-slider"></label>
+                  </div>
+                </div>
+              </li>
+
+              {% if not current_user.is_anonymous %}
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{{url_for('web.logout', next=(request.path + '?' + request.query_string.decode('utf-8')).rstrip('?'))}}" id="logout" class="libsunya-dropdown-link text-danger-hover">
+                    <span class="glyphicon glyphicon-log-out text-orange"></span> {{_('Logout')}}
+                  </a>
+                </li>
               {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Off-Canvas Drawer for Shelves & Categories -->
+    <div id="libsunya-drawer-backdrop" class="libsunya-drawer-backdrop"></div>
+    <aside id="libsunya-drawer" class="libsunya-drawer" aria-label="Library Navigation">
+      <div class="libsunya-drawer-header">
+        <div class="libsunya-drawer-brand">
+          <img src="{{ url_for('static', filename='img/libsunya-logo.svg') }}" class="libsunya-drawer-logo" alt="LibSunya">
+          <span>Lib<span class="text-orange">Sunya</span></span>
+        </div>
+        <button type="button" id="libsunya-drawer-close" class="libsunya-drawer-close" aria-label="Close Menu">&times;</button>
+      </div>
+      <div class="libsunya-drawer-body">
+        {% if current_user.is_authenticated or g.allow_anonymous %}
+        <nav class="navigation">
+          <ul class="list-unstyled" id="scnd-nav">
+            <li class="nav-head">{{_('Browse')}}</li>
+            {% for element in sidebar %}
+              {% if current_user.check_visibility(element['visibility']) and element['public'] %}
+                  <li id="nav_{{element['id']}}" {% if page == element['page'] %}class="active"{% endif %}><a href="{% if element['no_param'] %}{{url_for(element['link'], data=element['page'])}}{%else%}{{url_for(element['link'], data=element['page'], sort_param='stored')}}{% endif %}"><span class="glyphicon {{element['glyph']}}"></span> {{_(element['text'])}}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if current_user.is_authenticated or g.allow_anonymous %}
+              <li class="nav-head public-shelves">{{_('Shelves')}}</li>
+              {% for shelf in g.shelves_access %}
+                <li><a href="{{url_for('shelf.show_shelf', shelf_id=shelf.id)}}"><span class="glyphicon glyphicon-list shelf"></span> {{shelf.name|shortentitle(40)}}{% if shelf.is_public == 1 %} {{_('(Public)')}}{% endif %} <span class="badge badge-sm">{{shelf.books.all()|length}}</span></a></li>
+              {% endfor %}
+            {% if not current_user.is_anonymous %}
+              <li id="nav_createshelf" class="create-shelf"><a href="{{url_for('shelf.create_shelf')}}"><span class="glyphicon glyphicon-plus"></span> {{_('Create a Shelf')}}</a></li>
+              <li id="nav_about" {% if page == 'stat' %}class="active"{% endif %}><a href="{{url_for('about.stats')}}"><span class="glyphicon glyphicon-info-sign"></span> {{_('About')}}</a></li>
+            {% endif %}
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <div class="container-fluid libsunya-container">
+      <div class="libsunya-main-wrapper">
+        {% for message in get_flashed_messages(with_categories=True) %}
+          {%if message[0] == "error" %}
+          <div class="row-fluid text-center">
+            <div id="flash_danger" class="alert alert-danger">{{ message[1] }}</div>
+          </div>
+          {%endif%}
+          {%if message[0] == "info" %}
+          <div class="row-fluid text-center">
+            <div id="flash_info" class="alert alert-info">{{ message[1] }}</div>
+          </div>
+          {%endif%}
+          {%if message[0] == "warning" %}
+          <div class="row-fluid text-center">
+            <div id="flash_warning" class="alert alert-warning">{{ message[1] }}</div>
+          </div>
+          {%endif%}
+          {%if message[0] == "success" %}
+          <div class="row-fluid text-center">
+            <div id="flash_success" class="alert alert-success">{{ message[1] }}</div>
+          </div>
+          {%endif%}
+        {% endfor %}
+        {% block flash %}{% endblock %}
+
+        {% block body %}{% endblock %}
+
+        {% if pagination and (pagination.has_next or pagination.has_prev) %}
+          <div class="pagination">
+            {% if pagination.has_prev %}
+            <li class="page-item page-previous"><a class="page-link" aria-label="previous page" href="{{ (pagination.page - 1)|url_for_other_page }}">&laquo; {{_('Previous')}}</a></li>
+            {% endif %}
             {% for page in pagination.iter_pages() %}
               {% if page %}
                 {% if page != pagination.page %}
@@ -154,11 +275,12 @@
             {% if pagination.has_next %}
               <li class="page-item page-next"><a class="page-link next" aria-label="next page" href="{{ (pagination.page + 1)|url_for_other_page }}">{{_('Next')}} &raquo;</a></li>
             {% endif %}
-            </div>
-          {% endif %}
+          </div>
+        {% endif %}
       </div>
     </div>
-  </div>
+
+    <!-- Modal Dialogs -->
     <div class="modal fade" id="bookDetailsModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailsModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -174,17 +296,18 @@
       </div>
     </div>
     {% block modal %}{% endblock %}
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/libs/jquery.min.js') }}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libs/underscore-umd-min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libs/intention.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libs/context.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libs/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libs/jquery.form.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/uploadprogress.js') }}"> </script>
+    <script src="{{ url_for('static', filename='js/uploadprogress.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/libsunya.js') }}"></script>
     {% block js %}{% endblock %}
   </body>
 </html>

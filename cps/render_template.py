@@ -127,6 +127,11 @@ def get_sidebar_config(kwargs=None):
 
 # Returns the template for rendering and includes the instance name
 def render_title_template(*args, **kwargs):
+    g.config_authors_max = getattr(config, 'config_authors_max', 0)
+    g.allow_anonymous = getattr(config, 'config_anonbrowse', False)
+    g.allow_upload = getattr(config, 'config_uploading', False)
+    g.allow_registration = getattr(config, 'config_public_reg', False)
+    g.google_site_verification = getattr(config, 'config_google_site_verification', '')
     sidebar, simple = get_sidebar_config(kwargs)
     try:
         return themed_render(args[0],
