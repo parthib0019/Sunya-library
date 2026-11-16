@@ -11,6 +11,6 @@ services:
       # Keep user accounts, settings, and reading bookmarks safe on host
       - ./app.db:/app/app.db
       # Mount your Calibre library directory (where metadata.db and book folders are)
-      - ./library:/library
+      - ./database:/database
     environment:
       - CALIBRE_DB_PATH=/library
